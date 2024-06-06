@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using System.Web.Http.Cors;
 
-namespace WebApplication3
+public static class WebApiConfig
 {
-    public static class WebApiConfig
+    public static void Register(HttpConfiguration config)
     {
-        public static void Register(HttpConfiguration config)
-        {
-            // Configuration et services de l'API Web
+        // Configuration et services API Web
 
-            // Itinéraires de l'API Web
-            config.MapHttpAttributeRoutes();
+        // Enable CORS
+        var cors = new EnableCorsAttribute("*", "*", "*"); // Allow all origins, headers, and methods
+        config.EnableCors(cors);
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-        }
+        // Configuration des routes de l'API Web
+        config.MapHttpAttributeRoutes();
     }
 }
