@@ -5,13 +5,18 @@ public static class WebApiConfig
 {
     public static void Register(HttpConfiguration config)
     {
-        // Configuration et services API Webgit 
-
-        // Enable CORS
-        var cors = new EnableCorsAttribute("https://localhost:44330", "https://localhost:3000", "*"); // Allow all origins, headers, and methods
+        // Configuration et services Web API
+        // Activer CORS
+        var cors = new EnableCorsAttribute("http://localhost:3000", "https://localhost:44330", "*");
         config.EnableCors(cors);
 
-        // Configuration des routes de l'API Web
+        // Itinéraires de l'API Web
         config.MapHttpAttributeRoutes();
+
+        config.Routes.MapHttpRoute(
+            name: "DefaultApi",
+            routeTemplate: "api/{controller}/{id}",
+            defaults: new { id = RouteParameter.Optional }
+        );
     }
 }
